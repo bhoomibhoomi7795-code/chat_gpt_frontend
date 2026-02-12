@@ -10,6 +10,7 @@ const Header = () => {
         <Link to="/contact" style={{ color: 'white', marginRight: '1rem' }}>Contact</Link>
         <Link to="/login" style={{ color: 'white', marginRight: '1rem' }}>Login</Link>
         <Link to="/signup" style={{ color: 'white', marginRight: '1rem' }}>Signup</Link>
+        <Link to="/dashboard" style={{ color: 'white', marginRight: '1rem' }}>Dashboard</Link>
         <Link to="/ask" style={{ color: 'white', marginRight: '1rem' }}>Ask AI</Link>
       </nav>
     </div>
