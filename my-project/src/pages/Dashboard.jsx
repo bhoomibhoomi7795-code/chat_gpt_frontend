@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { LayoutGrid, Users, DollarSign, Activity, Search, Bell, MessageSquare } from 'lucide-react';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
     const navigate = useNavigate();
-    const [user, setUser] = useState({ name: 'User', email: '' });
 
     useEffect(() => {
         // Simple authentication check
@@ -11,7 +11,6 @@ const Dashboard = () => {
         if (!token) {
             navigate('/login');
         }
-        // In a real app, you'd fetch user data here
     }, [navigate]);
 
     const handleLogout = () => {
@@ -20,96 +19,83 @@ const Dashboard = () => {
     };
 
     const stats = [
-        { label: 'Total Projects', value: '12', icon: '📁', color: 'bg-blue-500' },
-        { label: 'Active Tasks', value: '5', icon: '⚡', color: 'bg-green-500' },
-        { label: 'Messages', value: '3', icon: '✉️', color: 'bg-purple-500' },
-        { label: 'Credits', value: '450', icon: '💎', color: 'bg-yellow-500' },
-    ];
-
-    const activities = [
-        { id: 1, text: 'Logged in from a new device', time: '2 mins ago' },
-        { id: 2, text: 'Completed "Project Alpha" milestones', time: '1 hour ago' },
-        { id: 3, text: 'Password changed successfully', time: 'Yesterday' },
+        { title: 'Total Revenue', value: '$45,231.89', icon: DollarSign, change: '+20.1%' },
+        { title: 'Active Users', value: '+2350', icon: Users, change: '+180.1%' },
+        { title: 'Sales', value: '+12,234', icon: LayoutGrid, change: '+19%' },
+        { title: 'Active Now', value: '+573', icon: Activity, change: '+201 since last hour' },
     ];
 
     return (
-        <div className="min-h-screen bg-gray-50 flex">
+        <div className="flex h-screen bg-gray-50">
             {/* Sidebar */}
-            <aside className="w-64 bg-indigo-900 text-white flex flex-col">
-                <div className="p-6 text-2xl font-bold border-b border-indigo-800 flex items-center gap-2">
-                    <span className="text-3xl">🚀</span> DashVite
+            <aside className="w-64 bg-white border-r border-gray-200 hidden md:flex flex-col">
+                <div className="p-6">
+                    <h2 className="text-2xl font-bold text-blue-600">MyProject</h2>
                 </div>
-                <nav className="flex-grow p-4 space-y-2">
-                    <a href="#" className="block p-3 rounded bg-indigo-800 text-white font-medium">Dashboard</a>
-                    <a href="#" className="block p-3 rounded hover:bg-indigo-800 transition">Analytics</a>
-                    <a href="#" className="block p-3 rounded hover:bg-indigo-800 transition">Settings</a>
+                <nav className="mt-6 px-4 flex-grow">
+                    <Link to="/dashboard" className="flex items-center px-4 py-3 text-gray-700 bg-gray-100 rounded-lg">
+                        <LayoutGrid className="w-5 h-5 mr-3" /> Dashboard
+                    </Link>
+                    <Link to="#" className="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                        <Users className="w-5 h-5 mr-3" /> Team
+                    </Link>
+                    <Link to="/ask" className="flex items-center px-4 py-3 mt-2 text-gray-600 hover:bg-gray-100 rounded-lg">
+                        <MessageSquare className="w-5 h-5 mr-3" /> Ask AI
+                    </Link>
                 </nav>
-                <div className="p-6 border-t border-indigo-800">
+                <div className="p-4 border-t border-gray-200">
                     <button
                         onClick={handleLogout}
-                        className="w-full bg-red-600 hover:bg-red-700 p-2 rounded font-semibold transition flex items-center justify-center gap-2"
+                        className="w-full flex items-center px-4 py-3 text-red-600 hover:bg-red-50 rounded-lg transition"
                     >
                         <span>🚪</span> Logout
                     </button>
-
                 </div>
             </aside>
 
             {/* Main Content */}
-            <main className="flex-grow p-8">
-                <header className="flex justify-between items-center mb-10">
-                    <div>
-                        <h1 className="text-3xl font-bold text-gray-800">Welcome Back, {user.name}!</h1>
-                        <p className="text-gray-500 mt-1">Here is what is happening with your account today.</p>
+            <main className="flex-1 overflow-y-auto">
+                {/* Header */}
+                <header className="bg-white border-b border-gray-200 px-8 py-4 flex items-center justify-between">
+                    <div className="relative w-96">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+                        <input
+                            type="text"
+                            placeholder="Search..."
+                            className="w-full pl-10 pr-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        />
+                    </div>
+                    <div className="flex items-center space-x-4">
+                        <Bell className="w-5 h-5 text-gray-500 cursor-pointer" />
+                        <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white font-medium">
+                            JD
+                        </div>
                     </div>
                 </header>
 
-                {/* Stats Grid */}
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-                    {stats.map((stat, idx) => (
-                        <div key={idx} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center gap-4 hover:shadow-md transition">
-                            <div className={`${stat.color} w-12 h-12 rounded-lg flex items-center justify-center text-2xl`}>
-                                {stat.icon}
-                            </div>
-                            <div>
-                                <p className="text-sm text-gray-500 font-medium uppercase tracking-wider">{stat.label}</p>
-                                <p className="text-2xl font-bold text-gray-800">{stat.value}</p>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+                {/* Dashboard Content */}
+                <div className="p-8">
+                    <h1 className="text-2xl font-semibold text-gray-800 mb-6">Overview</h1>
 
-                <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* Recent Activity */}
-                    <div className="lg:col-span-2 bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                        <h3 className="text-xl font-bold text-gray-800 mb-6">Recent Activity</h3>
-                        <div className="space-y-6">
-                            {activities.map(activity => (
-                                <div key={activity.id} className="flex gap-4 items-start pb-6 border-b border-gray-50 last:border-0 last:pb-0">
-                                    <div className="w-2 h-2 rounded-full bg-indigo-500 mt-2"></div>
-                                    <div className="flex-grow">
-                                        <p className="text-gray-800 font-medium">{activity.text}</p>
-                                        <p className="text-sm text-gray-400 mt-1">{activity.time}</p>
-                                    </div>
+                    {/* Stats Grid */}
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                        {stats.map((stat, idx) => (
+                            <div key={idx} className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
+                                <div className="flex items-center justify-between mb-4">
+                                    <stat.icon className="w-5 h-5 text-gray-500" />
                                 </div>
-                            ))}
-                        </div>
+                                <div>
+                                    <p className="text-sm font-medium text-gray-500">{stat.title}</p>
+                                    <h3 className="text-2xl font-bold text-gray-900">{stat.value}</h3>
+                                    <p className="text-xs text-green-600 mt-1">{stat.change} from last month</p>
+                                </div>
+                            </div>
+                        ))}
                     </div>
 
-                    {/* Quick Tools */}
-                    <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                        <h3 className="text-xl font-bold text-gray-800 mb-6">Quick Tools</h3>
-                        <div className="space-y-4">
-                            <button className="w-full text-left p-4 rounded-lg border border-indigo-50 hover:bg-indigo-50 transition font-medium text-indigo-700">
-                                📊 Generate Report
-                            </button>
-                            <button className="w-full text-left p-4 rounded-lg border border-indigo-50 hover:bg-indigo-50 transition font-medium text-indigo-700">
-                                🛠️ Account Audit
-                            </button>
-                            <button className="w-full text-left p-4 rounded-lg border border-indigo-50 hover:bg-indigo-50 transition font-medium text-indigo-700">
-                                🔑 security Check
-                            </button>
-                        </div>
+                    {/* Activity Placeholder */}
+                    <div className="mt-8 bg-white p-6 rounded-xl border border-gray-200 shadow-sm h-64 flex items-center justify-center">
+                        <p className="text-gray-400">Charts and detailed analytics would go here.</p>
                     </div>
                 </div>
             </main>
