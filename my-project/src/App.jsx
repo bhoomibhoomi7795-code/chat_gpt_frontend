@@ -8,7 +8,7 @@ import Footer from './Components/Footer'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard'
-
+import Ask from './pages/Ask'
 function App() {
   return (
     <Router>
@@ -22,6 +22,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/ask" element={<Ask />} />
       </Routes>
       <Footer />
     </Router>
