@@ -10,6 +10,13 @@ const ApiChat = () => {
     setLoading(true);
 
     try {
+      const token = localStorage.getItem('access_token');
+      if (!token) {
+        setResponse("You must be logged in to ask a question.");
+        setLoading(false);
+        return;
+      }
+
       const res = await fetch('http://127.0.0.1:8000/ask', {
         method: 'POST',
         headers: {
@@ -34,7 +41,7 @@ const ApiChat = () => {
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <h2 className="text-2xl font-bold mb-4">AI Assistant Interface</h2>
-      
+
       <form onSubmit={handleAsk} className="space-y-4">
         <div>
           <label className="block text-sm font-medium mb-1">Your Message</label>
